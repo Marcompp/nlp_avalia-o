@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage{emsnewsletter}
+
+\author{Marco Moliterno Pena Piacentini (Insper, São Paulo, Brasil)}
+\title{Avaliação Intermediária}
+
+\begin{document}
+   
+\maketitle
+
+\begin{abstract}
+\end{abstract}
+
+\section{Introdução}\label{sec:intro}
+
+Descobrir os fatores que mais aborrecem os clientes em suas compras online é um desafio para as empresas varejistas, pois essas informações podem ser difíceis de identificar a partir de dados não estruturados, como comentários de clientes. No entanto, entender o que os clientes não gostam ou o que pode ser melhorado em suas experiências de compra é fundamental para melhorar a satisfação do cliente e aumentar a fidelidade do cliente. Nesse sentido, as empresas podem recorrer a técnicas de análise de sentimentos e outras técnicas de processamento de linguagem natural para identificar os fatores que mais afetam a experiência do cliente em compras online.
+
+\section{Metodologia usada}
+
+Foi usada a base de dados disponibilizada pela Olist em: 
+
+www.kaggle.com/datasets/olistbr/brazilian-ecommerce
+
+Primeiramente, foi feito um join entre "olist\textunderscore orders\textunderscore dataset.csv" e "olist\textunderscore order\textunderscore reviews\textunderscore dataset.csv", para associar as reviews aos dados de seus pedidos.
+
+Então o dataset foi separado de acordo com o review score. Assim permitindo a análise individual de cada nível de satisfação do cliente.
+
+Para identificar as maiores causas de remorso nos clientes, foi calculada uma vetorização TFIDF das palavras usadas nas review de pedidos com nível de satisfação 1. Então foi calculada a soma do TFIDF de cada palavra para todas a reviews.
+
+Com isso, foi possivel identificar as palavras que apareceram com maior frequencia nas reviews baixas. Dentre elas, foram filtradas palavras conectivas e genéricas (de, do, etc), finalmente possibilitando a análise das 30 palavras mais relevantes.
+
+\section{Resultados}
+
+\begin{figure}[!hb]
+    \centering
+    \includegraphics[width=.9\linewidth]{emsnewsletter-template/TFIDF 1.png}
+    \caption{Soma de TFIDF das 30 palavras mais relevantes em reviews de valor 1}
+    \label{Soma de TFIDF das 30 palavras mais relevantes em reviews de valor 1}
+\end{figure}
+
+Análisando o gráfico, seis palavras se destacam: "produto","recebi", "veio", "comprei, "entregue" e "chegou".
+
+Dessas seis, três ("veio", "recebi", "entregue" e "chegou"), indicam que as reviews negativas tinham alguma relação com a entrega, além disso a presença de palavras como "aguardando", "prazo" e "dia" apontam para uma grande fonte de aborrecimento dos clientes ser o tempo de entrega.
+
+\section{Validação}
+
+Para validar essa hipotese, foi calculado o tempo entre a compra e a entrega de cada pedido, ou seja, o tempo que o cliente teve que esperar.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=.9\linewidth]{emsnewsletter-template/Days for Delivery.png}
+    \caption{Média de dias para entrega para cada rating}
+    \label{Média de dias para entrega para cada rating}
+\end{figure}
+
+Como pode ser visto no gráfico acima, a uma clara correlação entre satisfação do cliente e tempo de entrega, já que em média clientes que tiveram que esperar mais deram notas piores em suas reviews. Isso é consistente com a hipótese tirada da analise do TFIDF.
+
+Portanto, pode-se concluir que: 
+\textbf{A maior fonte de aborrecimente dos clientes é o tempo de espera para entrega.}
+
+\section{Outras considerações}
+
+A hipótese proposta não é a unica causa de aborrecimento dos clientes.
+
+Outras possibilidades incluem algo de errado no produto entregue (indicado pela presença de palavras como "errado", "diferente", "troca" e "qualidade"), o preço pago (indicado pela palavra "paguei"), ou algum problema nos recursos da loja online (indicado pelas palavras "loja", "site" e "contato").
+
+
+\section{Repositório do código}
+
+\href{}{https://github.com/Marcompp/nlp\textunderscore avalia-o}
+
+
+\end{document}
